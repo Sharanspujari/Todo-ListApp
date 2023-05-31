@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 import './App.css'
 import Header from './assets/Components/Topbar/Header'
-import Sidebar from './assets/Components/Topbar/Sidebar/Sidebar'
-import Home from './assets/Components/Home/Home'
+
+import TodoForm from './assets/Components/Home/TodoForm'
 function App() {
   // geekonomy
 
@@ -13,7 +13,7 @@ function App() {
    <Header/>
    <div className='components_container'>
    
-    <Home/>
+    <TodoForm/>
    </div>
    </div>
  
