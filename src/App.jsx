@@ -1,15 +1,17 @@
 import { useState } from 'react'
 
 import './App.css'
-
+import Header from './assets/Components/Topbar/Header'
+import Sidebar from './assets/Components/Topbar/Sidebar/Sidebar'
 function App() {
-  
+  // geekonomy
 
   return (
     <>
-    <div>
-     Wel come to Todolist APP
-    </div>
+    <div className='main_container'>
+   <Header/>
+   <Sidebar/>
+   </div>
     </>
   )
 }
