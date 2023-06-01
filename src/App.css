@@ -3,6 +3,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
+  
 }
 .header{
   height:55px;
@@ -47,16 +48,15 @@
 }
 .components_container{
   display: flex;
+  background-image: url("https://cdn.pixabay.com/photo/2016/05/05/02/37/sunset-1373171_1280.jpg");
+  height:150vh;
+ background-repeat:round;
 }
 
 .home_container{
-  width: fit-content;
-  background-image: url("https://www.clubmahindra.com/blog/media/section_images/naturephot-ec32e94608f809e.webp");
-   height:auto;
- 
-   object-fit: cover;
+
   flex: 4;
- 
+
 }
 .home-wrapper{
   display: flex;
@@ -103,7 +103,7 @@ color: white;
 
 margin-top: 20px; */
 display: flex;
-width:fit-content;
+width:350px;
 margin-left:500px;
 align-items: center;
 
@@ -113,7 +113,7 @@ margin-top:15px;
 border-bottom: 3px solid rgb(83, 83, 83);
 }
 .todovalue{
-  color: rgb(247, 142, 5);
+  color: rgb(8, 8, 8);
   padding: 10px;
   font-weight: 600;
 }
@@ -127,6 +127,61 @@ border-bottom: 3px solid rgb(83, 83, 83);
 }
 .checkboxc{
   align-items:start;
+}
+.action_container{
+  display: flex;
+ align-items: flex-end;
+ justify-content: space-between;
+}
+.btnedit>button{
+background-color: blue;
+color: white;
+padding:5px;
+border-style: none;
+border-radius: 5px;
+
+}
+.btnedit>button:hover{
+background-color: darkblue;
+cursor: pointer;
+
+}
+.btndelete>button{
+color: white;
+padding:5px;
+border-style: none;
+border-radius: 5px;
+background-color: red;
+}
+.btndelete>button:hover{
+  background-color: crimson;
+  cursor: pointer;
+}
+.btndelete{
+  margin-left: 5px;
+}
+.btndeleteall{
+  display: flex;
+  justify-content: center;
+}
+.btnall{
+  color: white;
+  padding:7px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  border-style: none;
+  border-radius: 5px;
+  background-color: rgb(14, 13, 13); 
+}
+.btnall:hover{
+  background-color: gray;
+  cursor: pointer;
+
+}
+.listwrapper{
+  display: flex;
+  align-items:center;
+  justify-content:space-around;
 }
 @media only screen and (max-width: 480px){
   .header{
