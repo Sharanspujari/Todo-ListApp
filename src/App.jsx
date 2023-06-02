@@ -5,11 +5,11 @@ import Header from './assets/Components/Topbar/Header'
 
 import TodoForm from './assets/Components/Home/TodoForm'
 function App() {
-  // geekonomy
+ 
 
   return (
     
-    <div className='cona'>
+    <div className='section_wrapper'>
    <Header/>
    <div className='components_container'>
    

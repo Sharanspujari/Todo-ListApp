@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 // import {MdEdit,MdDelete} from 'react-icons/all'
-
+import { Icon } from 'react-icons-kit'
+import {edit2} from 'react-icons-kit/feather/edit2'
+import {trash} from 'react-icons-kit/feather/trash'
 const todoDatafromLs = () => {
   const data = localStorage.getItem("todos");
   if (data) {
@@ -9,10 +11,12 @@ const todoDatafromLs = () => {
     return [];
   }
 };
+
 function TodoForm() {
   const [inputValue, setInputValue] = useState("");
   const [todo, setTodo] = useState(todoDatafromLs());
-  console.log(todo);
+  // console.log(todo);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const date = new Date();
@@ -36,87 +40,132 @@ function TodoForm() {
     setTodo(filterdItem);
   };
 
-  const[editItem,setEditItem]=useState(false)
-  const [itemid,setItemid]=useState()
-  const handleEdit = (todoInfo,i) => {
-    setEditItem(true)
-    setItemid(i)
-    setInputValue(todoInfo.inputValue)
+  const [todoItem, setTodoItem] = useState(false);
+  const [itemid, setItemid] = useState();
+
+  const handleEdit = (todoInf, index) => {
+    setTodoItem(true);
+    setItemid(index);
+    setInputValue(todoInf.todovalue);
   };
 
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    let items = [...todo];
+    let item = items[itemid];
+    item.todovalue = inputValue;
+    item.completed = false;
+    items[itemid] = item;
+    setTodo(items);
+    setInputValue("");
+    setTodoItem(false);
+  };
+
+  const handleCheckbox = (todoid) => {
+    let TodoArray = [];
+    todo.forEach((todoss) => {
+      if (todoss.id === todoid) {
+        if (todoss.completed === false) {
+          todoss.completed = true;
+        } else if (todoss.completed === true) {
+          todoss.completed = false;
+        }
+      }
+      TodoArray.push(todoss);
+      setTodo(TodoArray);
+    });
+  };
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todo));
-  }, [todo]); //useEffect will run whenever  todo state changes
-
-  // getting todo data from local storage.
+  }, [todo]); 
 
   return (
     <>
-     <div className="home_container">
-    {
-      editItem===false &&(
-      
-      <div className="home-wrapper">
-        <form className="form_fields" onSubmit={handleSubmit}>
-          <input
-            className="form-input"
-            type="text"
-            name="todovalue"
-            onChange={(e) => setInputValue(e.target.value)}
-            value={inputValue}
-            placeholder="Add to do"
-            autoComplete="off"
-            required
-          />
-          <button className="btn_add" type="submit">
-            ADD
-          </button>
-        </form>
-      </div>
      
-      )
-    }
-   
-      {todo.length > 0 && (
-        <>
-          {todo.map((todoInfo, i) => {
-            return (
-              <div className="todoinfo_container" key={todoInfo.id}>
-                <div className="listwrapper">
-                  <div className="todofields">
-                    <input type="checkbox" />
-                    <span className="todovalue">{todoInfo.todovalue}</span>
+        {todoItem === false && (
+          <div className="home-wrapper">
+            <form className="form_fields" onSubmit={handleSubmit}>
+              <input
+                className="form-input"
+                type="text"
+                name="todovalue"
+                onChange={(e) => setInputValue(e.target.value)}
+                value={inputValue}
+                placeholder="Add to do"
+                autoComplete="off"
+                required
+              />
+              <button className="btn_add" type="submit">
+                ADD
+              </button>
+            </form>
+          </div>
+        )}
+        {todoItem === true && (
+          <div className="home-wrapper">
+            <form className="form_fields" onSubmit={handleEditSubmit}>
+              <input
+                className="form-input"
+                type="text"
+                name="todovalue"
+                onChange={(e) => setInputValue(e.target.value)}
+                value={inputValue}
+                placeholder="Add to do"
+                autoComplete="off"
+                required
+              />
+              <button className="btn_add" type="submit">
+                Update
+              </button>
+            </form>
+          </div>
+        )}
+        {todo.length>0 &&(
+            <>
+              {
+                todo.map((todoInfo,index)=>(
+                 
+                <div className='todo' key={todoInfo.id}>
+                  <div className="ti">
+                     
+                      {todoItem ===false&&(
+                        <input type='checkbox' checked={todoInfo.completed}
+                        onChange={()=>handleCheckbox(todoInfo.id)}/>
+                      )}
+                      <span className="todoitems"
+                      style={todoInfo.completed===true?{textDecoration:'line-through'}:{textDecoration:'none'}}>{todoInfo.todovalue}
+                      </span>
                   </div>
 
-                  {/* edit delete */}
-                  <div className="action_container">
-                    <div className="btnedit">
-                      {/* <MdEdit/> */}
-                      <button onClick={() => handleEdit(todoInfo, i)}>
-                        Edit
-                      </button>
+                  
+                  {todoItem===false&&(
+                    <div className='editdelete_conatiner'>
+                      <div className="editdelete_div"
+                      onClick={()=>handleEdit(todoInfo,index)}>
+                          <Icon className="edit-icon" icon={edit2} size={20}/>
+                      </div>
+                      <div onClick={()=>handleDeleteItem(todoInfo.id)}>
+                          <Icon className="delete-icon" icon={trash} size={20}/>
+                      </div>
                     </div>
-                    <div className="btndelete">
-                      {/* <MdDelete/> */}
-                      <button onClick={() => handleDeleteItem(todoInfo.id)}>
-                        Delete
-                      </button>
-                    </div>
-                  </div>
+                  )}
+
                 </div>
-              </div>
-            );
-          })}
-          <div className="btndeleteall">
-            <button onClick={() => setTodo([])} className="btnall">
-              DELETE ALL
-            </button>
-          </div>
-        </>
-      )}
-      </div>
-      </>
-       );
+               
+              ))} 
+
+             
+              {todoItem===false&&(
+                <div className="delete-all" >
+                  <button className='btn-deleteall'
+                  onClick={()=>setTodo([])}>Delete All To Do</button>
+                </div>
+              )}
+            </>
+          )}
+     
+    </>
+  );
 }
 
 export default TodoForm;
